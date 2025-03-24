@@ -53,22 +53,45 @@ _Unraveling the Mysteries of the Female Brain: Sex Patterns in ADHD_
 ### Datasets:
 The datasets for the WiDS Datathon 2025 consists of two primary folders:
 1. Training Folder (1,200+ subjects):
-   * **Targets**: ADHD Diagnosis and Sex
-   * **Functional MRI Connectome Matrices**: fMRI data for brain activity mapping
-   * **Socio-demographic Information**: This includes both quantitative and categorical metadata such as age, ethnicity, race, and educational levels of the participants.
+   * **Targets**:
+       * **ADHD Diagnosis (ADHD_Outcome)**: This binary variable indicates whether a participant has been diagnosed with ADHD (1 = ADHD, 0 = No ADHD).
+       * **Sex (Sex_F)**: This binary variable indicates the sex of the participant (1 = Female, 0 = Male).
+   * **Functional MRI Connectome Matrices**: Functional brain imaging data in the form of connectome matrices, which capture brain activity across different regions over time.
+   * **Socio-demographic Information**:
+       * **Quantitative Metadata**: Includes numerical data such as scores from the Edinburgh Handedness Questionnaire (EHQ_EHQ_Total), Ishihara Color Vision Test (ColorVision_CV_Score), and scores from the Alabama Parenting Questionnaire (APQ_P_APQ_P_CP).
+       * **Categorical Metadata**: Includes demographic and parental data, such as ethnicity, race, and education level (e.g., Barratt_Barratt_P1_Edu representing the educational level of the participant's parent).
 
 2. Test Folder (300+ subjects):
    * **Functional MRI Connectome Matrices**: Functional MRI data for new subjects, which will be used for predictions in the competition.
    * **Socio-demographic Information**: Similar to the training set, this includes quantitative and categorical socio-demographic metadata, but without the target labels (ADHD and sex) for the subjects. These are used to test the models.
 
 Datasets and support are provided by the Healthy Brain Network (HBN), the signature scientific initiative of the Child Mind Institute, and the Reproducible Brain Charts project (RBC).
-### Data exploration and preprocessing approaches
-* 
-### Challenges and assumptions when working with the dataset(s)
 
-**Potential visualizations to include:**
+### Data exploration and preprocessing approaches
+The dataset includes a mixture of quantitative and categorical variables, and various preprocessing steps are required to prepare it for modeling:
+
+1. **Categorical Variables**: Categorical columns such as ethnicity, race, and occupation are one-hot encoded to create binary features for each category. This is crucial to avoid misleading ordinal relationships that could arise from directly encoding categorical variables as numbers.
+
+2. **Quantitative Variables**: Quantitative variables like age and scores from emotional assessments are handled by checking for outliers and missing values. These are visualized using histograms and boxplots to understand their distribution and potential impact on the model.
+
+3. **Handling Missing Data**: Missing values in the dataset are addressed by imputing the mean for numerical features (like MRI scan age), and filling missing categorical data with appropriate values.
+
+4. **Combining Data**: After preprocessing, the datasets (categorical, quantitative, and fMRI data) are merged into a single comprehensive training and testing set using the participant ID as the unique key.
+
+### Challenges and assumptions when working with the dataset(s)
+1. **Missing Data**: Handling missing values, especially in socio-demographic information, presents a challenge. Imputation methods like mean imputation, forward/backward filling, KNN are used, but these might not always capture the underlying distribution of the data, potentially impacting model accuracy.
+
+2. **Data Imbalance**: There is a noticeable gender imbalance in the dataset (more males than females), which could introduce bias in model predictions. Special attention is given to this imbalance during model training, such as by using weighted loss functions or resampling techniques.
+
+3. **High Dimensionality**: The fMRI connectome matrices are high-dimensional, making feature selection and dimensionality reduction essential for building an efficient model. Not all features are equally important for predicting ADHD and sex, so techniques like Recursive Feature Elimination (RFE) and L1 regularization are used to identify and retain the most impactful features​.
+
+### Potential visualizations to include:
 
 * Plots, charts, heatmaps, feature visualizations, sample dataset images
+  
+The training dataset includes the Socio-demographic Information and the Functional MRI Connectome Matrices.
+
+![train_df](https://github.com/user-attachments/assets/ca35c580-1181-4fb1-9530-542ca9d947cd)
 
 ---
 
@@ -88,8 +111,7 @@ Datasets and support are provided by the Healthy Brain Network (HBN), the signat
 
 * Performance metrics (e.g., Kaggle Leaderboard score, F1-score)
 * How your model performed overall
-* How your model performed across different skin tones (AJL)
-* Insights from evaluating model fairness (AJL)
+* Insights from evaluating model fairness
 
 **Potential visualizations to include:**
 
@@ -105,15 +127,6 @@ Datasets and support are provided by the Healthy Brain Network (HBN), the signat
 
 1. What brain activity patterns are associated with ADHD; are they different between males and females, and, if so, how?
 2. How could your work help contribute to ADHD research and/or clinical care?
-
-**AJL challenge:**
-
-As Dr. Randi mentioned in her challenge overview, “Through poetry, art, and storytelling, you can reach others who might not know enough to understand what’s happening with the machine learning model or data visualizations, but might still be heavily impacted by this kind of work.”
-As you answer the questions below, consider using not only text, but also illustrations, annotated visualizations, poetry, or other creative techniques to make your work accessible to a wider audience.
-Check out [this guide](https://drive.google.com/file/d/1kYKaVNR\_l7Abx2kebs3AdDi6TlPviC3q/view) from the Algorithmic Justice League for inspiration!
-
-1. What steps did you take to address [model fairness](https://haas.berkeley.edu/wp-content/uploads/What-is-fairness_-EGAL2.pdf)? (e.g., leveraging data augmentation techniques to account for training dataset imbalances; using a validation set to assess model performance across different skin tones)
-2. What broader impact could your work have?
 
 ---
 
