@@ -1,8 +1,5 @@
-# ai-studio-WiDS-datathon-2025
-Using fMRI data to build a model that predicts both an individual’s sex and their ADHD diagnosis.
-# GitHub Kaggle Project README Template
-
-⚠️ _Remember to update the above title and remove all guidance notes and examples in this template, before finalizing your README_
+# WiDS Datathon 2025
+_Unraveling the Mysteries of the Female Brain: Sex Patterns in ADHD_
 
 ---
 
@@ -10,9 +7,8 @@ Using fMRI data to build a model that predicts both an individual’s sex and th
 
 | Name | GitHub Handle | Contribution |
 | ----- | ----- | ----- |
-| Alice Doe | @AliceDoe | Built CNN model, performed data augmentation |
-| Mel Ramakrishnan | @MelRam | Led EDA, visualized dataset distributions, handled missing data |
-| Charlie Nguyen | @CharlieN | Implemented explainability tools |
+| Mandy Vien | @ManVien | Data preprocessing, built models |
+| Virounika Mina | @virounika | Built models |
 
 ---
 
@@ -25,7 +21,6 @@ Using fMRI data to build a model that predicts both an individual’s sex and th
 * Used \[explainability tool\] to interpret model decisions
 * Implemented \[data preprocessing method\] to optimize results within compute constraints
 
-🔗 [Equitable AI for Dermatology | Kaggle Competition Page](https://www.kaggle.com/competitions/bttai-ajl-2025/overview)
 🔗 [WiDS Datathon 2025 | Kaggle Competition Page](https://www.kaggle.com/competitions/widsdatathon2025/overview)
 
 ---
@@ -44,21 +39,32 @@ Using fMRI data to build a model that predicts both an individual’s sex and th
 
 ## **🏗️ Project Overview**
 
-**Describe:**
-
-* The Kaggle competition and its connection to the Break Through Tech AI Program
-* The objective of the challenge
-* The real-world significance of the problem and the potential impact of your work
+* The WiDS Datathon 2025 is a global competition where participants are tasked with building machine learning models to predict both an individual’s sex and their ADHD diagnosis using functional brain imaging data. This challenge is particularly meaningful as it focuses on ADHD diagnosis, which often affects males and females differently, with females being more likely to be undiagnosed. The competition is aligned with the Break Through Tech AI Program's goal to empower women in AI by providing them with a platform to develop their data science skills while tackling real-world problems.
+* The main objective of the WiDS Datathon 2025 is to create a multi-outcome model that can predict two target variables:
+  1. ADHD (1=yes, 0=no)
+  2. Sex (1=female, 0=male)
+* Participants will work with fMRI data and socio-demographic, emotional, and parenting information to address the challenge question: "What brain activity patterns are associated with ADHD, and how do they differ between males and females?"
+* This challenge has significant real-world implications, especially in improving the diagnosis and treatment of ADHD, which is often underdiagnosed in females due to their symptoms being less obvious. By identifying patterns in brain activity associated with ADHD, particularly for females, this work could lead to earlier diagnoses and more effective, personalized treatments. This can have a transformative impact on mental health outcomes, helping individuals with ADHD lead healthier, more functional lives. Additionally, this research can enhance the understanding of neuropsychiatric disorders and improve brain health, particularly for women.
 
 ---
 
 ## **📊 Data Exploration**
 
-**Describe:**
+### Datasets:
+The datasets for the WiDS Datathon 2025 consists of two primary folders:
+1. Training Folder (1,200+ subjects):
+   * **Targets**: ADHD Diagnosis and Sex
+   * **Functional MRI Connectome Matrices**: fMRI data for brain activity mapping
+   * **Socio-demographic Information**: This includes both quantitative and categorical metadata such as age, ethnicity, race, and educational levels of the participants.
 
-* The dataset(s) used (i.e., the data provided in Kaggle \+ any additional sources)
-* Data exploration and preprocessing approaches
-* Challenges and assumptions when working with the dataset(s)
+2. Test Folder (300+ subjects):
+   * **Functional MRI Connectome Matrices**: Functional MRI data for new subjects, which will be used for predictions in the competition.
+   * **Socio-demographic Information**: Similar to the training set, this includes quantitative and categorical socio-demographic metadata, but without the target labels (ADHD and sex) for the subjects. These are used to test the models.
+
+Datasets and support are provided by the Healthy Brain Network (HBN), the signature scientific initiative of the Child Mind Institute, and the Reproducible Brain Charts project (RBC).
+### Data exploration and preprocessing approaches
+* 
+### Challenges and assumptions when working with the dataset(s)
 
 **Potential visualizations to include:**
 
