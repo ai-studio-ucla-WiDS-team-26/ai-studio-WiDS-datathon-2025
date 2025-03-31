@@ -30,13 +30,18 @@ _Unraveling the Mysteries of the Female Brain: Sex Patterns in ADHD_
 
 ## **👩🏽‍💻 Setup & Execution**
 
-**Provide step-by-step instructions so someone else can run your code and reproduce your results. Depending on your setup, include:**
+To replicate and run this project:
 
-* How to clone the repository
-* How to install dependencies
-* How to set up the environment
-* How to access the dataset(s)
-* How to run the notebook or scripts
+**1. Clone the Repository:**
+`git clone https://github.com/your-repository-url.git`
+
+**2. Access the Dataset:**
+* Download the dataset from the Kaggle WiDS Datathon 2025 page.
+* Ensure the train_tsv and test_tsv folders are correctly placed under the same path direction for seamless integration.
+
+**3. Run the Jupyter Notebook:**
+* Launch Jupyter to run the project
+* Execute the notebook to preprocess the data, train models, and generate predictions.
 
 ---
 
@@ -44,12 +49,12 @@ _Unraveling the Mysteries of the Female Brain: Sex Patterns in ADHD_
 
 The **WiDS Datathon 2025** competition asks participants to predict ADHD diagnosis and sex using **functional MRI data** and **socio-demographic data**. This challenge has critical real-world implications, especially regarding the **underdiagnosis of ADHD in females**. The competition is aligned with the **Break Through Tech AI Program** to empower women in AI, offering a platform for them to apply their data science skills while solving a societal issue.
 
-### Objective:
+### 1. Objective:
 The main objective of the WiDS Datathon 2025 is to create a multi-outcome model that can predict two target variables:
   1. **ADHD Diagnosis** (1 = ADHD, 0 = No ADHD)
   2. **Sex** (1 = Female, 0 = Male)
  
-### Real-World Significance:
+### 2. Real-World Significance:
 * Participants will work with fMRI data and socio-demographic, emotional, and parenting information to address the challenge question: "What brain activity patterns are associated with ADHD, and how do they differ between males and females?"
   
 * This challenge has significant real-world implications, especially in improving the diagnosis and treatment of ADHD, which is often underdiagnosed in females due to their symptoms being less obvious. By identifying patterns in brain activity associated with ADHD, particularly for females, this work could lead to earlier diagnoses and more effective, personalized treatments. This can have a transformative impact on mental health outcomes, helping individuals with ADHD lead healthier, more functional lives. Additionally, this research can enhance the understanding of neuropsychiatric disorders and improve brain health, particularly for women.
@@ -104,32 +109,75 @@ The training dataset includes the Socio-demographic Information and the Function
 
 ## **🧠 Model Development**
 
-### Models Used:
-* **XGBoost**: Utilized for both ADHD and Sex prediction due to its performance in handling imbalanced datasets and its capacity to learn complex relationships.
+### 1. Models Used:
+* **XGBoost**: Utilized for both **ADHD and Sex prediction** due to its performance in handling imbalanced datasets and its capacity to learn complex relationships.
 
 * **Random Forest**: Used for comparison to XGBoost, especially for ADHD prediction, which demonstrated strong performance.
 
-### Hyperparameter Tuning:
-* **XGBoost**: Tuned the **learning rate** to 0.1, **max_depth** to 3, and **n_estimators** to 100 for sex prediction, adjusting the **scale_pos_weight** parameter to address class imbalance.
+### 2. Hyperparameter Tuning:
+* **Feature Selection:**
+  * **PCA (Principal Component Analysis)** was applied to reduce dimensionality and retain only the most significant features. The first 10 components were used for model training.
+  * **Correlation-based Feature Selection** was used to select top features that were most correlated with the target variables (ADHD and Sex).
 
-* **Random Forest**: Used **50 estimators** with optimized hyperparameters to balance bias and variance for ADHD prediction.
+* **Hyperparameter Tuning:**
+  * **XGBoost**: Hyperparameters such as **learning rate**, **max_depth**, and **n_estimators** were fine-tuned using cross-validation. The **scale_pos_weight** was adjusted to address class imbalance in **Sex prediction**.
+  * **Random Forest**: Tuned the **n_estimators** and **max_depth** to find a balance between model complexity and overfitting. Cross-validation was used to avoid overfitting and to determine the optimal settings.
 
-### Training Setup:
-**Cross-Validation**: We used **3-fold cross-validation** to ensure robustness and mitigate overfitting. The **F1-score** was the evaluation metric, focusing on balancing precision and recall for both target variables.
+### 3. Training Setup:
+* **Cross-Validation**: We performed **3-fold cross-validation** on both tasks (ADHD and Sex prediction) to ensure that the models generalized well.
+
+* **Data Split**: 100% of the available data was used for training and validation through cross-validation.
+
+* **Evaluation Metric**: The **F1-score** was used as the evaluation metric for both tasks, ensuring a balance between precision and recall, particularly for the imbalanced **Sex prediction** task.
+
+* **Baseline Performance**: We started with baseline models (e.g., logistic regression, basic decision trees) to compare against the final models. The **Random Forest** and **XGBoost** models showed significant improvements over the baseline in both F1-score and overall predictive power.
 
 ---
 
 ## **📈 Results & Key Findings**
 
-**Describe (as applicable):**
+### 1. Performance Metrics:
+* **ADHD Prediction:**
+  * F1-scores:
+    * Fold 1: 0.8611
+    * Fold 2: 0.8558
+    * Fold 3: 0.8301
+    * **Mean F1-score: 0.8490**
 
-* Performance metrics (e.g., Kaggle Leaderboard score, F1-score)
-* How your model performed overall
-* Insights from evaluating model fairness
+* **Sex Prediction:**
+  * F1-scores:
+    * Fold 1: 0.5161
+    * Fold 2: 0.5235
+    * Fold 3: 0.5000
+    * **Mean F1-score: 0.5132**
 
-**Potential visualizations to include:**
+* **Kaggle Leaderboard**: The final submission achieved a **score of 0.71489**, indicating strong model performance, particularly in **ADHD prediction**.
 
-* Confusion matrix, precision-recall curve, feature importance plot, prediction distribution, outputs from fairness or explainability tools
+### 2. Overall Model Performance:
+* **ADHD Prediction**: The model achieved solid performance with a mean **F1-score of 0.8490**, which indicates that the model can effectively identify individuals with ADHD.
+
+* **Sex Prediction**: The model faced challenges, with a **mean F1-score of 0.5132**, suggesting that the subtle differences in brain activity between males and females were difficult to capture effectively with the given data.
+
+### 3. Model Performance Across Different Groups (Fairness Insights):
+* **Fairness for ADHD**: To address the underdiagnosis of ADHD, particularly in females, a **weighted loss function** was used to give **female ADHD cases** more importance during training. This helped improve performance for females in the **ADHD prediction** task.
+
+* **Sex Prediction Fairness**: The **Sex prediction model** struggled with class imbalance and subtle differences in brain activity between sexes, resulting in lower performance in predicting **female sex**. This suggests a potential **bias** in the model’s learning.
+
+### 4. Insights from Evaluating Model Fairness:
+**Bias in Sex Prediction**: The **low F1-score** for **Sex prediction** highlights potential **gender biases** in the data. Further adjustments to model fairness, such as **rebalancing the dataset** or exploring **adversarial debiasing techniques**, could help address these biases.
+
+Potential Visualizations to Include:
+* **Confusion Matrix**:
+A confusion matrix for both ADHD and Sex prediction will clearly show the true positives, false positives, true negatives, and false negatives, helping assess the model’s prediction quality.
+
+* **Precision-Recall Curve**:
+Given the class imbalance, particularly for ADHD, a Precision-Recall Curve will provide insights into the trade-off between precision and recall for each class.
+
+* **Feature Importance Plot**:
+A feature importance plot will highlight the most influential features from both the fMRI data and socio-demographic features, allowing us to understand which variables played the most significant role in making predictions.
+
+* **Prediction Distribution**:
+A plot of predicted probabilities will show how confident the model is in its predictions, which can be insightful for identifying any overconfidence or underconfidence in specific classes.
 
 ---
 
@@ -137,27 +185,27 @@ The training dataset includes the Socio-demographic Information and the Function
 
 **WiDS challenge:**
 
-1. Brain Activity and ADHD: Our findings suggest that there are distinct brain activity patterns associated with ADHD. These patterns were observed differently between sexes, with females showing less obvious symptoms, highlighting the importance of early and accurate diagnosis.
+1. **Brain Activity and ADHD**: Our findings suggest that there are distinct brain activity patterns associated with ADHD. These patterns were observed differently between sexes, with females showing less obvious symptoms, highlighting the importance of early and accurate diagnosis.
 
-2. Contribution to ADHD Research and Clinical Care: The model's ability to identify these patterns can help researchers and clinicians design more effective treatments for ADHD. Moreover, identifying underdiagnosed ADHD in females may help address the current gender disparity in ADHD diagnoses.
+2. **Contribution to ADHD Research and Clinical Care**: The model's ability to identify these patterns can help researchers and clinicians design more effective treatments for ADHD. Moreover, identifying underdiagnosed ADHD in females may help address the current gender disparity in ADHD diagnoses.
 
 ---
 
 ## **🚀 Next Steps & Future Improvements**
 
-### Model Limitations:
+### 1. Model Limitations:
 
-Sex prediction was the most challenging aspect of the model, likely due to data imbalance and the subtle differences in brain activity between males and females. Future iterations could benefit from more balanced datasets or advanced deep learning approaches.
+* The **Sex prediction model** performed below expectations. This may be due to data imbalance and the subtle differences between male and female brain activity in ADHD.
 
-### Improvements:
+* More advanced models, such as **deep learning techniques**, could potentially improve sex prediction accuracy by capturing more complex relationships within the data.
 
-* Incorporating additional features such as genetic data or more granular psychological assessments could enhance the model’s performance.
+### 2. Improvements:
 
-* Exploring advanced models like deep neural networks for fMRI data could potentially uncover more complex patterns that traditional models like Random Forests might miss.
+Exploring advanced models like deep neural networks for fMRI data could potentially uncover more complex patterns that traditional models like Random Forests might miss.
 
-### Future Directions:
+### 3. Future Directions:
 
-Fairness and Bias Mitigation: Future work could focus on reducing bias further by ensuring the model performs equally well across different demographic groups.
+Exploring the use of more advanced neural networks and techniques for handling class imbalance would be beneficial in refining the model further.
 
 ---
 
