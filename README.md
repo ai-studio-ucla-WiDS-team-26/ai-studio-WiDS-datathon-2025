@@ -211,7 +211,7 @@ Exploring the use of more advanced neural networks and techniques for handling c
 
 ## **📄 References & Additional Resources**
 
-* Cite any relevant papers, articles, or tools used in your project
+* WiDS Workshops
 
 ---
 
